@@ -1,0 +1,50 @@
+#------------------------------------------------------
+# Notes from meeting with Ryan Dubina
+
+# First meeting with Ryan Dubina
+# Tutorial bed / Development bed
+# Apptainer can talk to Slurm; how to pass jobs
+# Inifiniband  -->   Host MPI
+# Container work through the image/file;  in a registry;   
+# Either me/you make an apptainer pull.
+# Push to a registry:  apptainer pull elm_pflotran.sif docker://bsulman/elm_pflotran
+
+# Container registry/ Docker Hub
+# apptainer pull elm_pflotran.sif docker://bsulman/elm_pflotran
+# apptainer run elm_pflotran.sif 
+# wget, cmake, etc -  
+# apptainer run @to get inside the file
+# whoami == $USER
+# touch elm.sbatch
+# vi elm.sbatch
+# #!/bin/bash
+# - TODO: Ask Ben Sulman about whether it is run on multiple nodes?  Does it use MPI?  How many nodes to run this? 1 at a time, or 2, or more?
+# - How do you run your container?
+# - Home user in dockerfile will not play nice with Compass?
+# - Expectation of how fast does it runs on another server.
+# - Competing tools:   Docker:Apptainer ,   Redhat: podman
+
+# sif file like and iso or image file
+# srun apptainer elmpflotran.sif
+
+# 2 COMPASS == 1 NERSC:  If used properly
+# Geometry of the workload across multiple nodes.
+# 92 nodes on COMPASS HPC
+# 100 sbatch on a single node  OR   jobs to multiple nodes 
+# 1 job - 1 node - 1 input
+
+# no write access in a /home  or  /user
+# /.cime  in the root
+
+# Remove/change: line 62,  line 130 - 134  
+# Can we run it without these lines?  Or how much 
+
+# Desire to get hotswappable:  Dockerfile that is not altered often
+# login node (stage directory)
+# Remove chown and chmod
+# petsc - is a library;
+# Goal: srun apptainer run elm_pflotrant -c elm_compute input==dataset
+
+# Can i run the container? compute it.  look at top "am i using all the cores?
+# Do I get valid outputs?
+# Am I optimized?
