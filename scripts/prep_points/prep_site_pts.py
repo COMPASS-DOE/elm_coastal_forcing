@@ -48,32 +48,34 @@ tide_gauges.to_file('../../data/tide_gauges/synoptic_tide_gauges.geojson')
 # --------------------------------------------------------------------------------------------------------------------
 # Read file of synoptic site coords
 
+from scripts.config import DATA_DIR, RESULTS_DIR
+
 # Read in site/zone coordinate file
 synoptic = \
-    (pd.read_csv('../../data/raw/transect_coords/compass_synoptic.csv')
+    (pd.read_csv(DATA_DIR / 'synoptic_sites/pts/synoptic/synoptic_elev_zone_v5.csv')
     .assign(grid_points = lambda x: x.site_id + '_' + x.zone_id)
     .assign(site_cat = 'synoptic')
-    .drop(columns=['distance'])
-     )
-
-# TODO: are the original coordinates from Ben on WGS84 or NAD83 datum?
-synoptic = \
-    (gpd.GeoDataFrame(synoptic,
-                      geometry=gpd.points_from_xy(synoptic.long, synoptic.lat, crs="EPSG:4269"))
-    .to_crs("EPSG:26918")  # Reproject to DEM's CRS: NAD83 / UTM zone 18N
-    .rename(columns={"site": "site_id"})
+    .drop(columns=['dist'])
     )
 
+# TODO: are the original coordinates from Ben on WGS84 or NAD83 datum?
+synoptic = gpd.GeoDataFrame(synoptic, geometry=gpd.points_from_xy(synoptic.long, synoptic.lat, crs="EPSG:4269"))
+
+
+# Reproject to DEM's CRS: NAD83 / UTM zone 18N
+synoptic_utm = synoptic.to_crs("EPSG:26918").reset_index()  
 
 # WGS84 - Save synoptic points to file
 synoptic_wgs84 = (synoptic.to_crs("EPSG:4326").reset_index())
-synoptic_wgs84.to_file('../data/processed/synoptic_pts_wgs84.geojson')
-
 
 # Save points
 if 1:
-    all_sites_utm.to_file('../../../data/site_pts/all/all_sites_utm_v01.geojson')
-    all_sites_wgs84.to_file('../../../data/site_pts/all/all_sites_pts_wgs84_v01.geojson')
+    synoptic_utm.to_file(RESULTS_DIR/'site_pts/synoptic_pts_utm.shp')
+    synoptic_wgs84.to_file(RESULTS_DIR/'site_pts/synoptic_pts_wgs84.shp')
+
+    # all_sites_wgs84.to_file('../../../data/site_pts/all/all_sites_pts_wgs84_v01.shp')
+    # all_sites_utm.to_file('../../../data/site_pts/all/all_sites_utm_v01.geojson')
+    # all_sites_wgs84.to_file('../../../data/site_pts/all/all_sites_pts_wgs84_v01.geojson')
 
 
 

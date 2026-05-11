@@ -34,7 +34,7 @@ with rasterio.open(out_fp, "w", **out_meta) as dest:
 
 #----------------------------------------------------------------
 
-from elm_coastal_forcing.prep_points.make_pts_transect import make_pts_transect
+from elm_coastal_forcing.prep_points.make_multipoint_transect import make_pts_transect
 
 # Read in site/zone coordinate file
 # Filter to region: Chesapeake Bay

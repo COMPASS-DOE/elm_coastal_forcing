@@ -60,31 +60,104 @@ def load_swot_tidal_wse(site_id=None) -> pd.DataFrame:
     return swot_tidal_wse_df
 
 
-#%% Load gage data for a given site -----------------------------------------------------------------------------------
-def load_noaa_gage_data(site_id=None) -> pd.DataFrame:
-    
-    from scripts.config import NOAA_GAUGE_PATH
 
+#%% Load NOAA data for a given site -----------------------------------------------------------------------------------
+def load_noaa_gage_data(NOAA_GAUGE_PATH) -> pd.DataFrame:
+    
     noaa_wl_df = pd.read_csv(NOAA_GAUGE_PATH, low_memory=False, dtype= {'wse_m': 'float'}) 
     noaa_wl_df = ( noaa_wl_df
-        .rename(columns={'wse_m':'gauge_wse_m'})
+        # .rename(columns={'wse_m':'gauge_wse_m'})
         .assign(datetime_LST = lambda x: pd.to_datetime(x['datetime_LST'], errors='coerce'))  # Convert datatype
         .assign(datetime_LST = lambda x: x['datetime_LST'].dt.tz_localize('UTC-04:00'))
         .sort_values(by='datetime_LST')
         .assign(dateindices = lambda x: pd.Categorical(x.datetime_LST.values).codes) # Add column of date indices
-        .loc[:, ['dateindices', 'datetime_LST', 'site_id', 'gauge_wse_m']]
+        .loc[:, ['station_id',  'datetime_LST', 'wse_m']] # 'dateindices',
+        
         )
-
-    # Filter to site of interest
-    if site_id is not None: 
-        noaa_wl_df = noaa_wl_df.query("site_id == @site_id")
-
     return noaa_wl_df
+
+
+#%% Load NERRS gauge data -----------------------------------------------------------------------------------
+def load_nerrs_gage_data(NERRS_GAUGE_PATH) -> pd.DataFrame:
+    nerrs_wl_df = (
+        pd.read_csv(NERRS_GAUGE_PATH, low_memory=False, dtype={'wse_m': 'float'})
+        .rename(columns={'DateTimeStamp': 'datetime_LST'})
+        .assign(datetime_LST=lambda x: pd.to_datetime(x['datetime_LST'], errors='coerce'))
+        .assign(datetime_LST=lambda x: x['datetime_LST'].dt.tz_localize('UTC-04:00'))
+        .sort_values(by='datetime_LST')
+        .assign(dateindices=lambda x: pd.Categorical(x.datetime_LST.values).codes)
+        .loc[:, ['StationCode', 'dateindices', 'datetime_LST', 'Depth', 'F_Depth', 'cDepth', 'F_cDepth']]
+        .set_index('datetime_LST', drop=False)
+        .resample('h').agg({
+            'StationCode': 'first',  # or 'last' if you prefer
+            # 'dateindices': 'first',  # or something else
+            'Depth': 'mean',
+            # 'F_Depth': 'first',
+            # 'cDepth': 'mean',
+            # 'F_cDepth': 'first'
+        })
+        .rename(columns={'StationCode': 'station_id', 'Depth': 'depth_m'})
+        .reset_index()
+    )
+    return nerrs_wl_df
+
+
+
+
+
+#%% Load VECOS gauge data -----------------------------------------------------------------------------------
+def load_vecos_gage_data(VECOS_GAUGE_PATH) -> pd.DataFrame:
+    vecos_wl_df = (
+        pd.read_csv(VECOS_GAUGE_PATH, low_memory=False, dtype={'wse_m': 'float'})
+        .rename(columns={'SAMPLE_DATETIME': 'datetime_LST',
+                         'STATION': 'station_id',})
+        .assign(datetime_LST=lambda x: pd.to_datetime(x['datetime_LST'], errors='coerce'))
+        .assign(datetime_LST=lambda x: x['datetime_LST'].dt.tz_localize('UTC-04:00'))
+        .sort_values(by='datetime_LST')
+        .assign(dateindices=lambda x: pd.Categorical(x.datetime_LST.values).codes)
+        .loc[:, ['station_id', 'datetime_LST', 'DEPTH']]
+        .set_index('datetime_LST', drop=False)
+        .resample('h').agg({
+            'station_id': 'first',
+            'DEPTH': 'mean',
+        })
+        .rename(columns={'DEPTH': 'depth_m'})
+        .reset_index()
+    )
+    return vecos_wl_df
+
+
+    # # Filter to site of interest
+    # if site_id is not None: 
+    #     noaa_wl_df = noaa_wl_df.query("site_id == @site_id")
+
+
+
+# #%% Load gage data for a given site -----------------------------------------------------------------------------------
+# def load_noaa_gage_data(site_id=None) -> pd.DataFrame:
+    
+#     from scripts.config import NOAA_GAUGE_PATH
+
+#     noaa_wl_df = pd.read_csv(NOAA_GAUGE_PATH, low_memory=False, dtype= {'wse_m': 'float'}) 
+#     noaa_wl_df = ( noaa_wl_df
+#         .rename(columns={'wse_m':'gauge_wse_m'})
+#         .assign(datetime_LST = lambda x: pd.to_datetime(x['datetime_LST'], errors='coerce'))  # Convert datatype
+#         .assign(datetime_LST = lambda x: x['datetime_LST'].dt.tz_localize('UTC-04:00'))
+#         .sort_values(by='datetime_LST')
+#         .assign(dateindices = lambda x: pd.Categorical(x.datetime_LST.values).codes) # Add column of date indices
+#         .loc[:, ['dateindices', 'datetime_LST', 'site_id', 'gauge_wse_m']]
+#         )
+
+#     # Filter to site of interest
+#     if site_id is not None: 
+#         noaa_wl_df = noaa_wl_df.query("site_id == @site_id")
+
+#     return noaa_wl_df
 
 
 #%% Load synoptic site points ---------------------------------
 def load_synoptic_site_points(site_id=None) -> gpd.GeoDataFrame:
-        
+    
     synoptics_pts = \
         (gpd.read_file('../../data/synoptic_sites/pts/all/synoptic_sites_pts_v2.geojson')
         # .query('region=="Chesapeake Bay"')

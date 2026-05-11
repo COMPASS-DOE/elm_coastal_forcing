@@ -3,12 +3,14 @@ import glob
 import os
 from datetime import datetime
 
+from scripts.config import DATA_DIR, RESULTS_DIR
+
+
 # Define the directory path
-indir = "../../data/tide_gauges/sondes/GCW_sondes/weir_exotable/monthly"
-outdir = "../../data/tide_gauges/sondes/GCW_sondes/weir_exotable"
+indir = os.path.join(DATA_DIR, "tide_gauges/sondes/GCW/weir_exotable/monthly")
+outdir = os.path.join(RESULTS_DIR, "tide_gauges/sondes")
 
 # Use glob to retrieve all file paths in the directory
-# Adjust extension based on your files (e.g., .csv, .txt, .xlsx)
 file_paths = glob.glob(os.path.join(indir, "*.csv"))
 
 # List to store individual DataFrames
@@ -26,9 +28,13 @@ for file in file_paths:
             .set_index("timestamp_local_hr")
             .resample("h").mean()
             .reset_index()
-            .loc[:,['timestamp_local_hr', 'depth_m', 'salinity_ppt']]
-            .assign(depth_m_anomaly=lambda x: x["depth_m"] - x["depth_m"].mean())
+            .loc[:,['timestamp_local_hr', 'depth_m']] # , 'salinity_ppt']]
+            .rename(columns={"timestamp_local_hr": "datetime_LST"})
+            # .assign(depth_m_anomaly=lambda x: x["depth_m"] - x["depth_m"].mean())
+            .assign(station_id="GCW")
         )
+
+        # combined["datetime_LST"] = pd.to_datetime(combined["datetime_LST"], errors="coerce", utc=True)
 
         dfs.append(df)  # Append the DataFrame to the list
     except Exception as e:
@@ -37,9 +43,9 @@ for file in file_paths:
 # Concatenate all DataFrames into a single DataFrame
 combined_df = (
     pd.concat(dfs, ignore_index=True)
-    .sort_values(by='timestamp_local_hr')
-)
+    .sort_values(by='datetime_LST')
+    )
 
 
 # Display or save the result
-combined_df.to_csv(f"{outdir}/GCReW_weir_exo.csv", index=False)  # Save to a CSV file
+combined_df.to_csv(f"{outdir}/GCW_weir_exo.csv", index=False)

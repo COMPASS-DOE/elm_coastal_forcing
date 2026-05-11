@@ -6,15 +6,24 @@ import datetime
 from datetime import datetime
 import pytz
 import numpy as np
+import sys
 
 
 #%% File paths and constants --------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
+# ensure imports like `from scripts.config import ...` work when running other scripts directly
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 DATA_DIR = PROJECT_ROOT / 'data'
 RESULTS_DIR = PROJECT_ROOT / 'output/results'
+FIG_DIR = PROJECT_ROOT / 'output/figures'
+
+# /Users/flue473/big_data/from_docs/projects/compass_fme/swot_tidal_forcing/output/results
 
 # List of site codes
-SITE_CODE_LIST = ['OWC'] #, 'GCW', 'SWM', 'PTR', 'SNC', 'TNC', 'WSC']
+SITE_CODE_LIST = ['GCW', 'SWH', 'GWI', 'MSM', 'PTR', 'CRC', 'OWC']
 
 # Time constants
 EASTERN_TZ = pytz.timezone("US/Eastern")

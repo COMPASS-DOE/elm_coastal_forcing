@@ -58,6 +58,8 @@ ml py-pip
 # The docker runs on Python 3.7, and returns this message:
 # Python 3.8 is recommended to run CIME. You have 3.7.
 
+# 1) List venv environments
+ls -1 ~/venvs
 
 # 2) Create a venv in your home (one-time)
 python3 -m venv ~/venvs/xr-env
