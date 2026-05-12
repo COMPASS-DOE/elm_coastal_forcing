@@ -1,0 +1,573 @@
+Setting up ad_spinup case
+
+python runcase.py --site US-PLM1 --ccsm_input /inputdata --rmold --no_submit --sitegroup Wetland --machine docker --model_root /E3SM --caseidprefix test_marsh --parm_file /inputdata/plum_island/parms_PIE --metdir /inputdata/atm/datm7/atm_forcing.datm7.GSWP3.0.5d.v2.c180716_PIE-Grid/cpl_bypass_full/ --nofire --marsh --tide_forcing_file /inputdata/plum_island/PIE_tide_forcing.nc --nopftdyn --no_dynroot --gswp3 --surffile /inputdata/plum_island/PIE_surfdata_threecell.nc --ng 256 --np 1 --tstep 1 --co2_file fco2_datm_rcp4.5_1765-2500_c130312.nc --mpilib openmpi --pio_version 2 --caseroot /cases --runroot /output --walltime 6 --project e3sm --domainfile /inputdata/plum_island/PIE_domain_threecell.nc --ad_spinup --nyears_ad_spinup 100 --align_year 12 --hist_mfilt 1 --hist_nhtfrq -175200 --compset ICB1850CNRDCTCBC --spinup_vars
+Machine is: docker
+Warning:  Case directory exists
+--rmold specified.  Removing old case
+CASE directory is: /cases/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup
+CASE exeroot is: /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld
+CASE rundir is: /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/run
+Removing build directory: /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld
+Removing run directory: /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/run
+
+ -----INFO: using user-provided DOMAIN
+domain file: /inputdata/plum_island/PIE_domain_threecell.nc
+
+ -----INFO: using user-provided SURFDATA
+surface data file: /inputdata/plum_island/PIE_surfdata_threecell.nc
+
+ -----INFO: using user-provided 20th landuse data file
+20th landuse data file: '
+
+
+ -----INFO: using user-provided forcing data
+Under directory: /inputdata/atm/datm7/atm_forcing.datm7.GSWP3.0.5d.v2.c180716_PIE-Grid/cpl_bypass_full/
+clm_params_c180524.nc
+nccopy -3 /inputdata/lnd/clm2/paramdata/clm_params_c180524.nc /tools/OLMT/temp/clm_params.nc
+Parameter humhol_ht not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter humhol_dist not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter hum_frac not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter tide_baseline not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter crit_gdd1 not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter crit_gdd2 not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sal_opt not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sal_tol not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sal_threshold not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sfcflow_ratescale not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter qflx_h2osfc_surfrate not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+./create_newcase --case /cases/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup --mach docker --compset ICB1850CNRDCTCBC --res ELM_USRDAT --mpilib openmpi --walltime 6:0:00 --handle-preexisting-dirs u --project e3sm > create_newcase.log
+test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup created.  See create_newcase.log for details
+Setting NTASKS_ATM to 1
+Setting NTASKS_LND to 1
+Setting NTASKS_ICE to 1
+Setting NTASKS_OCN to 1
+Setting NTASKS_CPL to 1
+Setting NTASKS_GLC to 1
+Setting NTASKS_ROF to 1
+Setting NTASKS_WAV to 1
+Setting NTASKS_ESP to 1
+Setting NTASKS_IAC to 1
+Running case.setup
+Turning on MARSH modification
+
+./xmlchange --append ELM_CONFIG_OPTS='-cppdefs " -DMODAL_AER -DMARSH"'
+Running case.build
+Building case in directory /cases/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup
+sharedlib_only is False
+model_only is False
+Generating component namelists as part of build
+  2026-02-17 17:47:48 atm
+Create namelist for component satm
+   Calling /E3SM/components/stub_comps/satm/cime_config/buildnml
+  2026-02-17 17:47:48 lnd
+Create namelist for component elm
+   Calling /E3SM/components/elm/cime_config/buildnml
+  2026-02-17 17:47:48 ice
+Create namelist for component sice
+   Calling /E3SM/components/stub_comps/sice/cime_config/buildnml
+  2026-02-17 17:47:48 ocn
+Create namelist for component socn
+   Calling /E3SM/components/stub_comps/socn/cime_config/buildnml
+  2026-02-17 17:47:48 rof
+Create namelist for component mosart
+   Calling /E3SM/components/mosart//cime_config/buildnml
+  2026-02-17 17:47:49 glc
+Create namelist for component sglc
+   Calling /E3SM/components/stub_comps/sglc/cime_config/buildnml
+  2026-02-17 17:47:49 wav
+Create namelist for component swav
+   Calling /E3SM/components/stub_comps/swav/cime_config/buildnml
+  2026-02-17 17:47:49 iac
+Create namelist for component siac
+   Calling /E3SM/components/stub_comps/siac/cime_config/buildnml
+  2026-02-17 17:47:49 esp
+Create namelist for component sesp
+   Calling /E3SM/components/stub_comps/sesp/cime_config/buildnml
+  2026-02-17 17:47:49 cpl
+Create namelist for component drv
+   Calling /E3SM/driver-mct/cime_config/buildnml
+Building gptl with output to file /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/gptl.bldlog.260217-174748
+   Calling /E3SM/share/build/buildlib.gptl
+Component gptl build complete with 1 warnings
+Building mct with output to file /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/mct.bldlog.260217-174748
+   Calling /E3SM/cime/CIME/build_scripts/buildlib.mct
+Building spio with output to file /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/spio.bldlog.260217-174748
+   Calling /E3SM/share/build/buildlib.spio
+Building csm_share with output to file /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/csm_share.bldlog.260217-174748
+   Calling /E3SM/share/build/buildlib.csm_share
+Component csm_share build complete with 3 warnings
+Configuring full e3sm model with output to file /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/e3sm.bldlog.260217-174748
+   Calling cmake directly, see top of log file for specific call
+Building e3sm model with output to file /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/e3sm.bldlog.260217-174748
+   Calling make, see top of log file for specific call
+Total build time: 217.836955 seconds
+MODEL BUILD HAS FINISHED SUCCESSFULLY
+
+
+Setting up final spinup case
+
+python runcase.py --site US-PLM1 --ccsm_input /inputdata --rmold --no_submit --sitegroup Wetland --machine docker --model_root /E3SM --caseidprefix test_marsh --parm_file /inputdata/plum_island/parms_PIE --metdir /inputdata/atm/datm7/atm_forcing.datm7.GSWP3.0.5d.v2.c180716_PIE-Grid/cpl_bypass_full/ --nofire --marsh --tide_forcing_file /inputdata/plum_island/PIE_tide_forcing.nc --nopftdyn --no_dynroot --gswp3 --surffile /inputdata/plum_island/PIE_surfdata_threecell.nc --ng 256 --np 1 --tstep 1 --co2_file fco2_datm_rcp4.5_1765-2500_c130312.nc --mpilib openmpi --pio_version 2 --caseroot /cases --runroot /output --walltime 6 --project e3sm --domainfile /inputdata/plum_island/PIE_domain_threecell.nc --finidat_case test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup --finidat_year 101 --run_units nyears --run_n 100 --align_year 12 --no_build --exeroot /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld --nopointdata --hist_mfilt 1 --hist_nhtfrq -175200 --compset ICB1850CNPRDCTCBC --spinup_vars
+
+Machine is: docker
+CASE directory is: /cases/test_marsh_US-PLM1_ICB1850CNPRDCTCBC
+CASE exeroot is: /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld
+CASE rundir is: /output/test_marsh_US-PLM1_ICB1850CNPRDCTCBC/run
+Removing run directory: /output/test_marsh_US-PLM1_ICB1850CNPRDCTCBC/run
+
+ -----INFO: using user-provided DOMAIN
+domain file: /inputdata/plum_island/PIE_domain_threecell.nc
+
+ -----INFO: using user-provided SURFDATA
+surface data file: /inputdata/plum_island/PIE_surfdata_threecell.nc
+
+ -----INFO: using user-provided 20th landuse data file
+20th landuse data file: '
+
+
+ -----INFO: using user-provided forcing data
+Under directory: /inputdata/atm/datm7/atm_forcing.datm7.GSWP3.0.5d.v2.c180716_PIE-Grid/cpl_bypass_full/
+clm_params_c180524.nc
+nccopy -3 /inputdata/lnd/clm2/paramdata/clm_params_c180524.nc /tools/OLMT/temp/clm_params.nc
+Parameter humhol_ht not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter humhol_dist not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter hum_frac not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter tide_baseline not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter crit_gdd1 not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter crit_gdd2 not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sal_opt not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sal_tol not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sal_threshold not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sfcflow_ratescale not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter qflx_h2osfc_surfrate not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+./create_newcase --case /cases/test_marsh_US-PLM1_ICB1850CNPRDCTCBC --mach docker --compset ICB1850CNPRDCTCBC --res ELM_USRDAT --mpilib openmpi --walltime 6:0:00 --handle-preexisting-dirs u --project e3sm > create_newcase.log
+test_marsh_US-PLM1_ICB1850CNPRDCTCBC created.  See create_newcase.log for details
+Setting NTASKS_ATM to 1
+Setting NTASKS_LND to 1
+Setting NTASKS_ICE to 1
+Setting NTASKS_OCN to 1
+Setting NTASKS_CPL to 1
+Setting NTASKS_GLC to 1
+Setting NTASKS_ROF to 1
+Setting NTASKS_WAV to 1
+Setting NTASKS_ESP to 1
+Setting NTASKS_IAC to 1
+Running case.setup
+Turning on MARSH modification
+
+./xmlchange --append ELM_CONFIG_OPTS='-cppdefs " -DMODAL_AER -DMARSH"'
+For your changes to take effect, run:
+./case.build --clean-all
+./case.build
+
+
+Setting up transient case
+
+python runcase.py --site US-PLM1 --ccsm_input /inputdata --rmold --no_submit --sitegroup Wetland --machine docker --model_root /E3SM --caseidprefix test_marsh --parm_file /inputdata/plum_island/parms_PIE --metdir /inputdata/atm/datm7/atm_forcing.datm7.GSWP3.0.5d.v2.c180716_PIE-Grid/cpl_bypass_full/ --nofire --marsh --tide_forcing_file /inputdata/plum_island/PIE_tide_forcing.nc --nopftdyn --no_dynroot --gswp3 --surffile /inputdata/plum_island/PIE_surfdata_threecell.nc --ng 256 --np 1 --tstep 1 --co2_file fco2_datm_rcp4.5_1765-2500_c130312.nc --mpilib openmpi --pio_version 2 --caseroot /cases --runroot /output --walltime 6 --project e3sm --domainfile /inputdata/plum_island/PIE_domain_threecell.nc --finidat_case test_marsh_US-PLM1_ICB1850CNPRDCTCBC --finidat_year 101 --run_units nyears --run_n 51 --align_year 1861 --hist_nhtfrq -24 --hist_mfilt 365 --no_build --exeroot /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld --nopointdata --compset ICB20TRCNPRDCTCBC --spinup_vars
+Machine is: docker
+CASE directory is: /cases/test_marsh_US-PLM1_ICB20TRCNPRDCTCBC
+CASE exeroot is: /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld
+CASE rundir is: /output/test_marsh_US-PLM1_ICB20TRCNPRDCTCBC/run
+Removing run directory: /output/test_marsh_US-PLM1_ICB20TRCNPRDCTCBC/run
+
+ -----INFO: using user-provided DOMAIN
+domain file: /inputdata/plum_island/PIE_domain_threecell.nc
+
+ -----INFO: using user-provided SURFDATA
+surface data file: /inputdata/plum_island/PIE_surfdata_threecell.nc
+
+ -----INFO: using user-provided 20th landuse data file
+20th landuse data file: '
+
+
+ -----INFO: using user-provided forcing data
+Under directory: /inputdata/atm/datm7/atm_forcing.datm7.GSWP3.0.5d.v2.c180716_PIE-Grid/cpl_bypass_full/
+clm_params_c180524.nc
+nccopy -3 /inputdata/lnd/clm2/paramdata/clm_params_c180524.nc /tools/OLMT/temp/clm_params.nc
+Parameter humhol_ht not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter humhol_dist not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter hum_frac not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter tide_baseline not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter crit_gdd1 not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter crit_gdd2 not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sal_opt not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sal_tol not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sal_threshold not found in clm_params.nc. Adding.
+PFT specified. Setting value for all PFTs
+Parameter sfcflow_ratescale not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+Parameter qflx_h2osfc_surfrate not found in clm_params.nc. Adding.
+No PFT specified. Assuming universal parameter
+./create_newcase --case /cases/test_marsh_US-PLM1_ICB20TRCNPRDCTCBC --mach docker --compset ICB20TRCNPRDCTCBC --res ELM_USRDAT --mpilib openmpi --walltime 6:0:00 --handle-preexisting-dirs u --project e3sm > create_newcase.log
+test_marsh_US-PLM1_ICB20TRCNPRDCTCBC created.  See create_newcase.log for details
+Setting NTASKS_ATM to 1
+Setting NTASKS_LND to 1
+Setting NTASKS_ICE to 1
+Setting NTASKS_OCN to 1
+Setting NTASKS_CPL to 1
+Setting NTASKS_GLC to 1
+Setting NTASKS_ROF to 1
+Setting NTASKS_WAV to 1
+Setting NTASKS_ESP to 1
+Setting NTASKS_IAC to 1
+Running case.setup
+Turning on MARSH modification
+
+./xmlchange --append ELM_CONFIG_OPTS='-cppdefs " -DMODAL_AER -DMARSH"'
+For your changes to take effect, run:
+./case.build --clean-all
+./case.build
+
+
+Aliases of cases to be submitted:
+
+['ad_spinup', 'iniadjust', 'fn_spinup', 'transient']
+
+  2026-02-17 17:52:00 atm
+Create namelist for component satm
+   Calling /E3SM/components/stub_comps/satm/cime_config/buildnml
+  2026-02-17 17:52:00 lnd
+Create namelist for component elm
+   Calling /E3SM/components/elm/cime_config/buildnml
+  2026-02-17 17:52:01 ice
+Create namelist for component sice
+   Calling /E3SM/components/stub_comps/sice/cime_config/buildnml
+  2026-02-17 17:52:01 ocn
+Create namelist for component socn
+   Calling /E3SM/components/stub_comps/socn/cime_config/buildnml
+  2026-02-17 17:52:01 rof
+Create namelist for component mosart
+   Calling /E3SM/components/mosart//cime_config/buildnml
+  2026-02-17 17:52:01 glc
+Create namelist for component sglc
+   Calling /E3SM/components/stub_comps/sglc/cime_config/buildnml
+  2026-02-17 17:52:01 wav
+Create namelist for component swav
+   Calling /E3SM/components/stub_comps/swav/cime_config/buildnml
+  2026-02-17 17:52:01 iac
+Create namelist for component siac
+   Calling /E3SM/components/stub_comps/siac/cime_config/buildnml
+  2026-02-17 17:52:01 esp
+Create namelist for component sesp
+   Calling /E3SM/components/stub_comps/sesp/cime_config/buildnml
+  2026-02-17 17:52:01 cpl
+Create namelist for component drv
+   Calling /E3SM/driver-mct/cime_config/buildnml
+Checking that inputdata is available as part of case submission
+Loading input file list: 'Buildconf/elm.input_data_list'
+Model elm missing file stream_fldfilename_popdens = '/inputdata/lnd/clm2/firedata/elmforc.ssp5_hdm_0.5x0.5_simyr1850-2100_c190109.nc'
+Model elm no file specified for finidat
+Loading input file list: 'Buildconf/mosart.input_data_list'
+Loading input file list: 'Buildconf/cpl.input_data_list'
+Using protocol wget with user  and passwd
+Using protocol wget with user  and passwd
+Using protocol svn with user  and passwd
+Client protocol None not enabled
+Checking server https://web.lcrc.anl.gov/public/e3sm/inputdata/ with protocol wget
+Using protocol wget with user  and passwd
+Loading input file list: 'Buildconf/elm.input_data_list'
+Model elm missing file stream_fldfilename_popdens = '/inputdata/lnd/clm2/firedata/elmforc.ssp5_hdm_0.5x0.5_simyr1850-2100_c190109.nc'
+Trying to download file: 'lnd/clm2/firedata/elmforc.ssp5_hdm_0.5x0.5_simyr1850-2100_c190109.nc' to path '/inputdata/lnd/clm2/firedata/elmforc.ssp5_hdm_0.5x0.5_simyr1850-2100_c190109.nc' using WGET protocol.
+SUCCESS
+
+Model elm no file specified for finidat
+Loading input file list: 'Buildconf/mosart.input_data_list'
+Loading input file list: 'Buildconf/cpl.input_data_list'
+Check case OK
+submit_jobs case.run
+Submit job case.run
+Starting job script case.run
+2026-02-17 17:52:09 CASE.RUN BEGINS HERE
+2026-02-17 17:52:09 RUN_MODEL BEGINS HERE
+2026-02-17 17:52:09 PRE_RUN_CHECK BEGINS HERE
+2026-02-17 17:52:09 NAMELIST CREATION BEGINS HERE
+Generating namelists for /cases/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup
+  2026-02-17 17:52:09 atm
+Create namelist for component satm
+   Calling /E3SM/components/stub_comps/satm/cime_config/buildnml
+  2026-02-17 17:52:09 lnd
+Create namelist for component elm
+   Calling /E3SM/components/elm/cime_config/buildnml
+  2026-02-17 17:52:09 ice
+Create namelist for component sice
+   Calling /E3SM/components/stub_comps/sice/cime_config/buildnml
+  2026-02-17 17:52:09 ocn
+Create namelist for component socn
+   Calling /E3SM/components/stub_comps/socn/cime_config/buildnml
+  2026-02-17 17:52:09 rof
+Create namelist for component mosart
+   Calling /E3SM/components/mosart//cime_config/buildnml
+  2026-02-17 17:52:09 glc
+Create namelist for component sglc
+   Calling /E3SM/components/stub_comps/sglc/cime_config/buildnml
+  2026-02-17 17:52:09 wav
+Create namelist for component swav
+   Calling /E3SM/components/stub_comps/swav/cime_config/buildnml
+  2026-02-17 17:52:09 iac
+Create namelist for component siac
+   Calling /E3SM/components/stub_comps/siac/cime_config/buildnml
+  2026-02-17 17:52:09 esp
+Create namelist for component sesp
+   Calling /E3SM/components/stub_comps/sesp/cime_config/buildnml
+  2026-02-17 17:52:09 cpl
+Create namelist for component drv
+   Calling /E3SM/driver-mct/cime_config/buildnml
+2026-02-17 17:52:10 NAMELIST CREATION HAS FINISHED
+-------------------------------------------------------------------------
+ - Prestage required restarts into /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/run
+ - Case input data directory (DIN_LOC_ROOT) is /inputdata
+ - Checking for required input datasets in DIN_LOC_ROOT
+-------------------------------------------------------------------------
+2026-02-17 17:52:10 PRE_RUN_CHECK HAS FINISHED
+run command is mpirun  -np 1  -npernode 4 /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/e3sm.exe   >> e3sm.log.$LID 2>&1
+2026-02-17 17:52:10 SAVE_PRERUN_PROVENANCE BEGINS HERE
+Starting job script case.run
+2026-02-17 17:52:10 SAVE_PRERUN_PROVENANCE HAS FINISHED
+2026-02-17 17:52:10 MODEL EXECUTION BEGINS HERE
+2026-02-17 17:52:10 MODEL EXECUTION HAS FINISHED
+Exception from case_run: ERROR: RUN FAIL: Command 'mpirun  -np 1  -npernode 4 /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/e3sm.exe   >> e3sm.log.$LID 2>&1 ' failed
+See log file for details: /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/run/e3sm.log.260217-175209
+Submitted job case.run with id None
+cp: cannot stat '/output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/run//test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup.elm.r.0101-01-01-00000.nc': No such file or directory
+chmod: cannot access '/output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/run//test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup.elm.r.0101-01-01-00000.nc.orig': No such file or directory
+Traceback (most recent call last):
+  File "adjust_restart.py", line 91, in <module>
+    hist_vals = nffun.getvar(fname_hist, var_names[v])
+  File "/tools/OLMT/netcdf4_functions.py", line 6, in getvar
+    nffile = Dataset(fname,"r")
+  File "src/netCDF4/_netCDF4.pyx", line 2307, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 1925, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: b'/output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/run//test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup.elm.h1.0101-01-01-00000.nc'
+  2026-02-17 17:52:15 atm
+Create namelist for component satm
+   Calling /E3SM/components/stub_comps/satm/cime_config/buildnml
+  2026-02-17 17:52:15 lnd
+Create namelist for component elm
+   Calling /E3SM/components/elm/cime_config/buildnml
+  2026-02-17 17:52:16 ice
+Create namelist for component sice
+   Calling /E3SM/components/stub_comps/sice/cime_config/buildnml
+  2026-02-17 17:52:16 ocn
+Create namelist for component socn
+   Calling /E3SM/components/stub_comps/socn/cime_config/buildnml
+  2026-02-17 17:52:16 rof
+Create namelist for component mosart
+   Calling /E3SM/components/mosart//cime_config/buildnml
+  2026-02-17 17:52:16 glc
+Create namelist for component sglc
+   Calling /E3SM/components/stub_comps/sglc/cime_config/buildnml
+  2026-02-17 17:52:16 wav
+Create namelist for component swav
+   Calling /E3SM/components/stub_comps/swav/cime_config/buildnml
+  2026-02-17 17:52:16 iac
+Create namelist for component siac
+   Calling /E3SM/components/stub_comps/siac/cime_config/buildnml
+  2026-02-17 17:52:16 esp
+Create namelist for component sesp
+   Calling /E3SM/components/stub_comps/sesp/cime_config/buildnml
+  2026-02-17 17:52:16 cpl
+Create namelist for component drv
+   Calling /E3SM/driver-mct/cime_config/buildnml
+Checking that inputdata is available as part of case submission
+Loading input file list: 'Buildconf/mosart.input_data_list'
+Loading input file list: 'Buildconf/cpl.input_data_list'
+Loading input file list: 'Buildconf/elm.input_data_list'
+Model elm missing file finidat = '/output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/run/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup.elm.r.0101-01-01-00000.nc'
+Using protocol wget with user  and passwd
+Using protocol wget with user  and passwd
+Using protocol svn with user  and passwd
+Client protocol None not enabled
+Checking server https://web.lcrc.anl.gov/public/e3sm/inputdata/ with protocol wget
+Using protocol wget with user  and passwd
+Loading input file list: 'Buildconf/mosart.input_data_list'
+Loading input file list: 'Buildconf/cpl.input_data_list'
+Loading input file list: 'Buildconf/elm.input_data_list'
+Model elm missing file finidat = '/output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/run/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup.elm.r.0101-01-01-00000.nc'
+    Cannot download file since it lives outside of the input_data_root '/inputdata'
+Check case OK
+submit_jobs case.run
+Submit job case.run
+Starting job script case.run
+2026-02-17 17:52:17 CASE.RUN BEGINS HERE
+2026-02-17 17:52:17 RUN_MODEL BEGINS HERE
+2026-02-17 17:52:17 PRE_RUN_CHECK BEGINS HERE
+2026-02-17 17:52:17 NAMELIST CREATION BEGINS HERE
+Generating namelists for /cases/test_marsh_US-PLM1_ICB1850CNPRDCTCBC
+  2026-02-17 17:52:17 atm
+Create namelist for component satm
+   Calling /E3SM/components/stub_comps/satm/cime_config/buildnml
+  2026-02-17 17:52:17 lnd
+Create namelist for component elm
+   Calling /E3SM/components/elm/cime_config/buildnml
+  2026-02-17 17:52:18 ice
+Create namelist for component sice
+   Calling /E3SM/components/stub_comps/sice/cime_config/buildnml
+  2026-02-17 17:52:18 ocn
+Create namelist for component socn
+   Calling /E3SM/components/stub_comps/socn/cime_config/buildnml
+  2026-02-17 17:52:18 rof
+Create namelist for component mosart
+   Calling /E3SM/components/mosart//cime_config/buildnml
+  2026-02-17 17:52:18 glc
+Create namelist for component sglc
+   Calling /E3SM/components/stub_comps/sglc/cime_config/buildnml
+  2026-02-17 17:52:18 wav
+Create namelist for component swav
+   Calling /E3SM/components/stub_comps/swav/cime_config/buildnml
+  2026-02-17 17:52:18 iac
+Create namelist for component siac
+   Calling /E3SM/components/stub_comps/siac/cime_config/buildnml
+  2026-02-17 17:52:18 esp
+Create namelist for component sesp
+   Calling /E3SM/components/stub_comps/sesp/cime_config/buildnml
+  2026-02-17 17:52:18 cpl
+Create namelist for component drv
+   Calling /E3SM/driver-mct/cime_config/buildnml
+2026-02-17 17:52:18 NAMELIST CREATION HAS FINISHED
+-------------------------------------------------------------------------
+ - Prestage required restarts into /output/test_marsh_US-PLM1_ICB1850CNPRDCTCBC/run
+ - Case input data directory (DIN_LOC_ROOT) is /inputdata
+ - Checking for required input datasets in DIN_LOC_ROOT
+-------------------------------------------------------------------------
+2026-02-17 17:52:18 PRE_RUN_CHECK HAS FINISHED
+run command is mpirun  -np 1  -npernode 4 /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/e3sm.exe   >> e3sm.log.$LID 2>&1
+2026-02-17 17:52:18 SAVE_PRERUN_PROVENANCE BEGINS HERE
+Starting job script case.run
+2026-02-17 17:52:18 SAVE_PRERUN_PROVENANCE HAS FINISHED
+2026-02-17 17:52:18 MODEL EXECUTION BEGINS HERE
+2026-02-17 17:52:18 MODEL EXECUTION HAS FINISHED
+Exception from case_run: ERROR: RUN FAIL: Command 'mpirun  -np 1  -npernode 4 /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/e3sm.exe   >> e3sm.log.$LID 2>&1 ' failed
+See log file for details: /output/test_marsh_US-PLM1_ICB1850CNPRDCTCBC/run/e3sm.log.260217-175217
+Submitted job case.run with id None
+  2026-02-17 17:52:20 atm
+Create namelist for component satm
+   Calling /E3SM/components/stub_comps/satm/cime_config/buildnml
+  2026-02-17 17:52:20 lnd
+Create namelist for component elm
+   Calling /E3SM/components/elm/cime_config/buildnml
+  2026-02-17 17:52:21 ice
+Create namelist for component sice
+   Calling /E3SM/components/stub_comps/sice/cime_config/buildnml
+  2026-02-17 17:52:21 ocn
+Create namelist for component socn
+   Calling /E3SM/components/stub_comps/socn/cime_config/buildnml
+  2026-02-17 17:52:21 rof
+Create namelist for component mosart
+   Calling /E3SM/components/mosart//cime_config/buildnml
+  2026-02-17 17:52:21 glc
+Create namelist for component sglc
+   Calling /E3SM/components/stub_comps/sglc/cime_config/buildnml
+  2026-02-17 17:52:21 wav
+Create namelist for component swav
+   Calling /E3SM/components/stub_comps/swav/cime_config/buildnml
+  2026-02-17 17:52:21 iac
+Create namelist for component siac
+   Calling /E3SM/components/stub_comps/siac/cime_config/buildnml
+  2026-02-17 17:52:21 esp
+Create namelist for component sesp
+   Calling /E3SM/components/stub_comps/sesp/cime_config/buildnml
+  2026-02-17 17:52:21 cpl
+Create namelist for component drv
+   Calling /E3SM/driver-mct/cime_config/buildnml
+Checking that inputdata is available as part of case submission
+Loading input file list: 'Buildconf/elm.input_data_list'
+Model elm no file specified for flanduse_timeseries
+Model elm missing file finidat = '/output/test_marsh_US-PLM1_ICB1850CNPRDCTCBC/run/test_marsh_US-PLM1_ICB1850CNPRDCTCBC.elm.r.0101-01-01-00000.nc'
+Loading input file list: 'Buildconf/mosart.input_data_list'
+Loading input file list: 'Buildconf/cpl.input_data_list'
+Using protocol wget with user  and passwd
+Using protocol wget with user  and passwd
+Using protocol svn with user  and passwd
+Client protocol None not enabled
+Checking server https://web.lcrc.anl.gov/public/e3sm/inputdata/ with protocol wget
+Using protocol wget with user  and passwd
+Loading input file list: 'Buildconf/elm.input_data_list'
+Model elm no file specified for flanduse_timeseries
+Model elm missing file finidat = '/output/test_marsh_US-PLM1_ICB1850CNPRDCTCBC/run/test_marsh_US-PLM1_ICB1850CNPRDCTCBC.elm.r.0101-01-01-00000.nc'
+    Cannot download file since it lives outside of the input_data_root '/inputdata'
+Loading input file list: 'Buildconf/mosart.input_data_list'
+Loading input file list: 'Buildconf/cpl.input_data_list'
+Check case OK
+submit_jobs case.run
+Submit job case.run
+Starting job script case.run
+2026-02-17 17:52:22 CASE.RUN BEGINS HERE
+2026-02-17 17:52:22 RUN_MODEL BEGINS HERE
+2026-02-17 17:52:22 PRE_RUN_CHECK BEGINS HERE
+2026-02-17 17:52:22 NAMELIST CREATION BEGINS HERE
+Generating namelists for /cases/test_marsh_US-PLM1_ICB20TRCNPRDCTCBC
+  2026-02-17 17:52:22 atm
+Create namelist for component satm
+   Calling /E3SM/components/stub_comps/satm/cime_config/buildnml
+  2026-02-17 17:52:22 lnd
+Create namelist for component elm
+   Calling /E3SM/components/elm/cime_config/buildnml
+  2026-02-17 17:52:23 ice
+Create namelist for component sice
+   Calling /E3SM/components/stub_comps/sice/cime_config/buildnml
+  2026-02-17 17:52:23 ocn
+Create namelist for component socn
+   Calling /E3SM/components/stub_comps/socn/cime_config/buildnml
+  2026-02-17 17:52:23 rof
+Create namelist for component mosart
+   Calling /E3SM/components/mosart//cime_config/buildnml
+  2026-02-17 17:52:23 glc
+Create namelist for component sglc
+   Calling /E3SM/components/stub_comps/sglc/cime_config/buildnml
+  2026-02-17 17:52:23 wav
+Create namelist for component swav
+   Calling /E3SM/components/stub_comps/swav/cime_config/buildnml
+  2026-02-17 17:52:23 iac
+Create namelist for component siac
+   Calling /E3SM/components/stub_comps/siac/cime_config/buildnml
+  2026-02-17 17:52:23 esp
+Create namelist for component sesp
+   Calling /E3SM/components/stub_comps/sesp/cime_config/buildnml
+  2026-02-17 17:52:23 cpl
+Create namelist for component drv
+   Calling /E3SM/driver-mct/cime_config/buildnml
+2026-02-17 17:52:23 NAMELIST CREATION HAS FINISHED
+-------------------------------------------------------------------------
+ - Prestage required restarts into /output/test_marsh_US-PLM1_ICB20TRCNPRDCTCBC/run
+ - Case input data directory (DIN_LOC_ROOT) is /inputdata
+ - Checking for required input datasets in DIN_LOC_ROOT
+-------------------------------------------------------------------------
+2026-02-17 17:52:23 PRE_RUN_CHECK HAS FINISHED
+run command is mpirun  -np 1  -npernode 4 /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/e3sm.exe   >> e3sm.log.$LID 2>&1
+2026-02-17 17:52:23 SAVE_PRERUN_PROVENANCE BEGINS HERE
+Starting job script case.run
+2026-02-17 17:52:23 SAVE_PRERUN_PROVENANCE HAS FINISHED
+2026-02-17 17:52:23 MODEL EXECUTION BEGINS HERE
+2026-02-17 17:52:23 MODEL EXECUTION HAS FINISHED
+Exception from case_run: ERROR: RUN FAIL: Command 'mpirun  -np 1  -npernode 4 /output/test_marsh_US-PLM1_ICB1850CNRDCTCBC_ad_spinup/bld/e3sm.exe   >> e3sm.log.$LID 2>&1 ' failed
+See log file for details: /output/test_marsh_US-PLM1_ICB20TRCNPRDCTCBC/run/e3sm.log.260217-175222
+Submitted job case.run with id None

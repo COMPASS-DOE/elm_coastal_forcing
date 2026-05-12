@@ -1,0 +1,311 @@
+---
+title: "Technical documentation on ELM synoptic forcings"
+author: "Etienne Fluet-Chouinard"
+date: "2026-05-08"
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+
+# Ben's workflow for synoptic runs on groundwater wells
+## Build hydrological boundary conditions from L2 data
+Fetch groundwater **water level** and **salinity** from COMPASS L2 releases (gap-filled), aggregate to hourly, and write outputs to:
+- `COMPASS_hydro_BC_fromL2`
+
+## Modify domain and surface files
+Generate modified domain and surface datasets:
+- `domain_synoptic_OLMT.nc` → `COMPASS_domain_multicell_fromgw.nc`
+- `surfdata_synoptic_OLMT.nc` → `COMPASS_surfdata_fromgw.nc`
+
+### Surface-data edits for groundwater-well forcing
+When supplying water levels relative to the land surface, set height/stream-distance fields consistently:
+
+<!-- ```{python} -->
+# Set height above stream to 0 since water levels are supplied relative to surface
+If using the groundwater wells, set the topo and height to zero. Set height above stream to 0 since water levels are being supplied relative to surface
+`
+surfdata_multicell["ht_above_stream"] = 0.0 * surfdata_multicell["TOPO"]
+surfdata_multicell["dist_from_stream"] = 1.0 + 0.0 * surfdata_multicell["ht_above_stream"]
+`
+
+
+### Fdrain:
+fdrain controls the relationship between water table depth and topographic drainage
+In surface data file:
+`
+surfdata_multicell['fdrain']=surfdata_multicell['dist_from_stream']*0.0 + 2.5
+`
+
+# Troubleshooting:
+*Etienne email:*
+The log reported a stopping error on the water balance:
+WARNING:  water balance error  nstep=4203  local indexc=15  errh2o=   0.87219575832727969     
+ elm model is stopping - error is greater than 1e-4 (mm)
+`ENDRUN:ERROR in /E3SM/components/elm/src/biogeophys/BalanceCheckMod.F90 at line 453  
+ERROR limit is in BalanceCheckMod
+`
+
+*In Sulman 2023:* ksurf is a rate constant representing the time scale of surface water transfer as a function of the difference in surface water height, set to a rapid flow to so that surface water level is close to equilibrium with the tidal forcing (7 × 10^5 s-1).
+
+
+
+According to Ben's paper: 
+`Ksurf = 7 x 1e-5  s^-1`
+Ksubsurf is the rate constant for subsurface net flow, calculated using the mean saturated hydraulic conductivity of the column
+
+
+Ben's response:
+The model is failing a mass conservation check for water; some time step the difference between grid cell water table height and the boundary condition water level is very high which is causing a huge water flux. This could happen if there is a mismatch in grid cell elevation (ht_above_stream) and the datum of the water level boundary condition, or if the water level is changing very fast between timesteps. 
+
+### Potential sources of error: 
+- difference between tide_height and grid cell water level
+- the limit on maximum lateral flux rate prevents from changing too fast and can cause problems if lateral flux ends up being too fast. 
+
+
+# FAQ
+
+Q. Does the spinup outputs go up to the date of error?
+A. No, not midway through 20-year intervals that get saved.
+
+NOTE: The h1 spinup output does not include water variables. 
+NOTE: The h0 spinup output includes water variables but only has 1 time step (the initial conditions), so it won't show any time variation.
+
+spval fills it with the model’s special missing value (sentinel),
+
+Gridpoint #15 is upland GCREW???
+
+### Possible fixeS:
+- STEP 1: RELAX THE errh2o to ~1 
+
+
+
+
+
+In Sulman 2023: ksurf is a rate constant representing the time scale of surface water transfer as a function of the difference in surface water height, set to a rapid flow to so that surface water level is close to equilibrium with the tidal forcing (7 × 10^5 s-1).
+
+Etienne email:
+Based on your response, I had a look at lnd.log file that I had missed.  The log reported a stopping error on the water balance:
+WARNING:  water balance error  nstep=4203  local indexc=15  errh2o=   0.87219575832727969     
+ elm model is stopping - error is greater than 1e-4 (mm)
+ENDRUN:ERROR in /E3SM/components/elm/src/biogeophys/BalanceCheckMod.F90 at line 453  
+
+ERROR limit is in BalanceCheckMod
+
+
+Ksurf = 7 x 1e-5  s^-1
+Ksubsurf is the rate constant for subsurface net flow, calculated using the mean saturated hydraulic conductivity of the column
+
+
+Ben's response:
+The model is failing a mass conservation check for water; some time step the difference between grid cell water table height and the boundary condition water level is very high which is causing a huge water flux. This could happen if there is a mismatch in grid cell elevation (ht_above_stream) and the datum of the water level boundary condition, or if the water level is changing very fast between timesteps. 
+I’ve tried to limit the maximum lateral flux rate to prevent it from changing too fast but it can still cause problems like this if the lateral flux ends up being too fast. 
+
+
+- difference between tide_height and grid cell water level
+
+
+Does the spinup outputs go up to the date of error?
+
+# NOTE: The h1 spinup output does not include water variables. 
+# NOTE: The h0 spinup output includes water variables but only has 1 time step (the initial conditions), so it won't show any time variation.
+
+
+spval fills it with the model’s special missing value (sentinel),
+
+
+Gridpoint #15 is upland GCREW???
+
+
+
+####  STEP 1: RELAX THE errh2o to ~1 
+
+
+## Description: modified from Ben's COMPASS_OLMT_command.txt
+
+- ZWT: water table depth (vegetated landunits only) (m)
+- ZWT_PERCH: perched water table depth (vegetated landunits only) (m)
+- TWS: total water storage (mm) 
+- TWS_MONTH_BEGIN: total water storage at the beginning of a month (mm)
+- TWS_MONTH_END: total water storage at the end of a month (mm)
+
+- SOILLIQ: soil liquid water (vegetated landunits only) (kg/m2)
+- SOILLIQ_ICE: soil liquid water (ice landunits only) (kg/m2)
+- SOILPSI: soil water potential in each soil layer (MPa)
+- SOILWATER_10CM: soil liquid water + ice in top 10cm of soil (veg landunit...) (kg)
+
+
+
+#-------------------------------------------------------
+### To find text in files:
+grep -RIn "qflx_lat_aqu" .
+
+
+Check: 
+- value of qflx_lat_aqu in that time step 
+	Located in:
+	./E3SM/components/elm/src/data_types/ColumnDataType.F90
+	./E3SM/components/elm/src/biogeophys/SoilHydrologyMod.F90
+	./E3SM/components/elm/src/biogeophys/BalanceCheckMod.F90
+	./E3SM/components/elm/src/biogeophys/WaterfluxType.F90
+	./E3SM/components/elm/src/external_models/emi/src/emi_data_exchange/EMI_ColumnWaterFluxType_ExchangeMod.F90
+	./E3SM/components/elm/src/external_models/emi/src/em/alquimia/ExternalModelAlquimiaMod.F90
+
+
+#-------------------------------------------------------
+## From ELM run log:
+qflx_lat_aqu               =  -0.18371380403416496     
+qflx_tide                  =    0.0000000000000000 
+
+
+#-------------------------------------------------------
+## From BalanceCheckMod:
+#if (defined HUM_HOL || MARSH)
+qflx_lat_aqu  =>  col_wf%qflx_lat_aqu, & ! Input:   [real(r8) (:)   ]  lateral flow between hummock and hollow (mm H2O /s)
+qflx_tide     =>  col_wf%qflx_tide, & ! Input:   [real(r8) (:)   ]  tidal flux between consecutive timesteps (mm H2O /s)
+qflx_surf_input  =>  col_wf%qflx_surf_input, & ! Input:   [real(r8) (:)   ]  input to hollow surface water from hummock (mm H2O /s)
+eflx_sh_tide   =>  col_ef%eflx_sh_tide, & ! Input:   [real(r8) (:)   ]  sensible heat flux from tide
+
+
+#if (defined HUM_HOL)
+          ! add qflx_drain_perched and qflx_flood
+             ! HUM_HOL
+             errh2o(c) = endwb(c) - begwb(c) &
+                 - (forc_rain_col(c) + forc_snow_col(c)  + qflx_floodc(c) + qflx_irrig(c) &
+                  - qflx_evap_tot(c) - qflx_surf(c) + qflx_surf_input(c) - qflx_h2osfc_surf(c) &
+                  - qflx_qrgwl(c) - qflx_drain(c) - qflx_drain_perched(c) - qflx_snwcp_ice(c)  &
+                  + qflx_lat_aqu(c) - qflx_lateral(c)) * dtime
+#elif (defined MARSH)
+             errh2o(c) = endwb(c) - begwb(c) &
+                  - (forc_rain_col(c) + forc_snow_col(c)  + qflx_floodc(c) + qflx_irrig(c) &
+                  + qflx_tide(c) & !TAO qflx_tide added
+                  - qflx_evap_tot(c) - qflx_surf(c) + qflx_surf_input(c) - qflx_h2osfc_surf(c) &
+                  - qflx_qrgwl(c) - qflx_drain(c) - qflx_drain_perched(c) - qflx_snwcp_ice(c)  &
+                  + qflx_lat_aqu(c)) * dtime
+#else
+             errh2o(c) = endwb(c) - begwb(c) &
+                  - (forc_rain_col(c) + forc_snow_col(c)  + qflx_floodc(c) + qflx_surf_irrig_col(c) + qflx_over_supply_col(c) &
+                  - qflx_evap_tot(c) - qflx_surf(c)  - qflx_h2osfc_surf(c) &
+                  - qflx_qrgwl(c) - qflx_drain(c) - qflx_drain_perched(c) - qflx_snwcp_ice(c) &
+                  - qflx_lateral(c) + qflx_h2orof_drain(c)) * dtime
+
+
+#-------------------------------------------------------
+### From SoilHydrologyMod.F90:
+
+
+
+#if (defined HUM_HOL || defined MARSH)
+!Compute lateral fluxes between Hummock and Hollow (code by XS)
+! Water table changes due to lateral flux between hommock and hollow in aquifer 
+       do fc = 1, num_hydrologyc
+           c = filter_hydrologyc(fc)
+
+           qflx_lat_aqu_layer(c,:) = 0.0
+    
+    ! use analytical expression for aquifer specific yield
+             rous = watsat(c,nlevbed) &
+                  * ( 1. - (1.+1.e3*zwt(c)/sucsat(c,nlevbed))**(-1./bsw(c,nlevbed)))
+             rous=max(rous,0.02_r8)
+    
+             qflx_rsub_sat(c) = 0._r8
+       !-  water table is below the soil column -----------------------------------
+             if(jwt(c) == nlevbed) then
+              if (qflx_lat_aqu(c).gt.0._r8) then
+                wa(c)  = wa(c) + qflx_lat_aqu(c) * dtime
+               !wt(c)  = wa(c)
+                zwt(c) = zwt(c) - (qflx_lat_aqu(c) * dtime)/1000._r8/rous
+                h2osoi_liq(c,nlevbed) =  h2osoi_liq(c,nlevbed)+max(0._r8,(wa(c)-5000._r8))
+              wa(c)  = min(wa(c), 5000._r8)
+            else
+              wa(c)  = wa(c) + qflx_lat_aqu(c) * dtime
+             !wt(c)  = wa(c)
+              zwt(c) = zwt(c) - qflx_lat_aqu(c) *dtime/1000._r8/rous
+              h2osoi_liq(c,nlevbed) =h2osoi_liq(c,nlevbed)+max(0._r8,(wa(c)-5000._r8))
+             wa(c)  = min(wa(c), 5000._r8)
+           endif
+          else
+   !-- water table within soil layers 1-9  -------------------------------------
+   ! try to raise water table to account for lateral flux qflx_lat_aqu
+             qflx_lat_aqu_tot = qflx_lat_aqu(c)  * dtime
+             if(qflx_lat_aqu_tot > 0.) then !rising water table
+                do j = jwt(c)+1, 1,-1
+   ! use analytical expression for specific yield
+                   s_y = watsat(c,j) &
+                       * ( 1. -  (1.+1.e3*zwt(c)/sucsat(c,j))**(-1./bsw(c,j)))
+                   s_y=max(s_y,0.02_r8)
+   
+                   qflx_lat_aqu_layer(c,j)=min(qflx_lat_aqu_tot,(s_y*(zwt(c) - zi(c,j-1))*1.e3))
+                   qflx_lat_aqu_layer(c,j)=max(qflx_lat_aqu_layer(c,j),0._r8)
+                   h2osoi_liq(c,j) = h2osoi_liq(c,j) + qflx_lat_aqu_layer(c,j)
+                   qflx_lat_aqu_tot = qflx_lat_aqu_tot - qflx_lat_aqu_layer(c,j)
+                   !new code test DMR 4/29/13
+                   if(s_y > 0._r8) zwt(c) = zwt(c) - qflx_lat_aqu_layer(c,j)/s_y/1000._r8
+                   if (qflx_lat_aqu_tot <= 0.) then
+                     exit
+                   else if (j .eq. 1) then
+                       ! if (c .eq. 2) then !hollow:  send excess to surface water
+                          h2osfc(c) = h2osfc(c) + qflx_lat_aqu_tot !DMR 6/13/13
+                       ! else               !hummock:  send to drainage
+                       !   qflx_rsub_sat(c) = qflx_lat_aqu_tot / dtime
+                       ! end if
+                   end if
+                 end do
+              else ! deepening water table (negative lateral flux)
+                !Remove from surface water first if available
+                if (h2osfc(c) .gt. 0) then ! .and. maxval(icefrac(c,1:jwt(c)+1)) .le. 0.9) then
+                  h2osfc(c) = h2osfc(c) + qflx_lat_aqu_tot
+                  qflx_lat_aqu_tot = 0._r8
+                  if (h2osfc(c) .lt. 0) then
+                    qflx_lat_aqu_tot = h2osfc(c)
+                    h2osfc(c) = 0._r8 
+                  end if
+                end if
+                do j = jwt(c)+1, nlevbed
+   
+   ! use analytical expression for specific yield
+                   s_y = watsat(c,j) &
+                        * ( 1. -  (1.+1.e3*zwt(c)/sucsat(c,j))**(-1./bsw(c,j)))
+                   s_y=max(s_y,0.02_r8)
+                   qflx_lat_aqu_layer(c,j)=max(qflx_lat_aqu_tot,-(s_y*(zi(c,j) - zwt(c))*1.e3))
+                   qflx_lat_aqu_layer(c,j)=min(qflx_lat_aqu_layer(c,j),0._r8)
+                   h2osoi_liq(c,j) = h2osoi_liq(c,j) + qflx_lat_aqu_layer(c,j)
+                   qflx_lat_aqu_tot = qflx_lat_aqu_tot - qflx_lat_aqu_layer(c,j)
+   
+                   if (qflx_lat_aqu_tot >= 0.) then
+                      zwt(c) = zwt(c) - qflx_lat_aqu_layer(c,j)/s_y/1000._r8
+                      exit
+                   else
+                      zwt(c) = zi(c,j)
+                   endif
+                enddo
+                if (qflx_lat_aqu_tot > 0.) zwt(c) = zwt(c) - qflx_lat_aqu_tot/1000._r8/rous
+             endif
+   !-- recompute jwt for following calculations  ---------------------------------
+   ! allow jwt to equal zero when zwt is in top layer
+             jwt(c) = nlevbed
+             do j = 1,nlevbed
+                if(zwt(c) <= zi(c,j)) then
+                   jwt(c) = j-1
+                   exit
+                end if
+             enddo
+          endif
+       enddo
+#endif
+
+
+
+
+#-------------------------------------------------------
+# In SoilHydrologyType:
+ ! Tidal
+ real(r8), pointer :: ht_above_stream            (:)    ! Column height difference from stream
+ real(r8), pointer :: dist_from_stream           (:)    ! Column distance from stream
+
+
+#-------------------------------------------------------
+# From ColumnDataMod:
+   allocate(this%qflx_lat_aqu           (begc:endc))             ; this%qflx_lat_aqu         (:)   = 0.0_r8
+    allocate(this%qflx_lat_aqu_layer     (begc:endc,1:nlevgrnd))  ; this%qflx_lat_aqu_layer   (:,:) = spval

@@ -1,0 +1,207 @@
+Apptainer> bash run_e3sm.template.sh
+
+----- Starting fetch_code -----
+
+Cloning e3sm repository branch master under /home/flue473/E3SMv2/code/20210806
+Cloning into '.'...
+remote: Enumerating objects: 637056, done.
+remote: Counting objects: 100% (2650/2650), done.
+remote: Compressing objects: 100% (1000/1000), done.
+remote: Total 637056 (delta 2245), reused 1653 (delta 1650), pack-reused 634406 (from 3)
+Receiving objects: 100% (637056/637056), 528.46 MiB | 14.94 MiB/s, done.
+Resolving deltas: 100% (478152/478152), done.
+Checking out files: 100% (8694/8694), done.
+Cloning into '.git/hooks'...
+remote: Enumerating objects: 52, done.
+remote: Counting objects: 100% (8/8), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 52 (delta 3), reused 6 (delta 2), pack-reused 44 (from 1)
+Receiving objects: 100% (52/52), 13.53 KiB | 2.25 MiB/s, done.
+Resolving deltas: 100% (21/21), done.
+Already on 'master'
+Your branch is up to date with 'origin/master'.
+Submodule 'cime' (git@github.com:ESMCI/cime.git) registered for path 'cime'
+Submodule 'cosp2' (git@github.com:e3sm-project/COSPv2.0.git) registered for path 'components/eam/src/physics/cosp2/external'
+Submodule 'rrtmgp' (git@github.com:E3SM-Project/rte-rrtmgp.git) registered for path 'components/eam/src/physics/rrtmgp/external'
+Submodule 'fates' (git@github.com:NGEET/fates.git) registered for path 'components/elm/src/external_models/fates'
+Submodule 'alm-mpp' (git@github.com:MPP-LSM/MPP.git) registered for path 'components/elm/src/external_models/mpp'
+Submodule 'sbetr' (git@github.com:BeTR-biogeochemistry-modeling/sbetr.git) registered for path 'components/elm/src/external_models/sbetr'
+Submodule 'gcam' (git@github.com:E3SM-Project/giac) registered for path 'components/gcam/src'
+Submodule 'components/mpas-albany-landice/src/SeaLevelModel' (git@github.com:MALI-Dev/1DSeaLevelModel_FWTW.git) registered for path 'components/mpas-albany-landice/src/SeaLevelModel'
+Submodule 'components/mpas-ocean/src/BGC' (git@github.com:E3SM-Project/Ocean-BGC.git) registered for path 'components/mpas-ocean/src/BGC'
+Submodule 'components/mpas-ocean/src/FFTW' (https://github.com/knbarton/fftw-3.3.8.git) registered for path 'components/mpas-ocean/src/FFTW'
+Submodule 'MARBL' (git@github.com:E3SM-Project/MARBL.git) registered for path 'components/mpas-ocean/src/MARBL'
+Submodule 'components/mpas-ocean/src/SHTNS' (https://bitbucket.org/nschaeff/shtns.git) registered for path 'components/mpas-ocean/src/SHTNS'
+Submodule 'components/mpas-ocean/src/cvmix' (git@github.com:CVMix/CVMix-src.git) registered for path 'components/mpas-ocean/src/cvmix'
+Submodule 'components/mpas-ocean/src/gotm' (git@github.com:E3SM-Project/GOTMcode.git) registered for path 'components/mpas-ocean/src/gotm'
+Submodule 'components/mpas-ocean/src/ppr' (https://github.com/dengwirda/PPR.git) registered for path 'components/mpas-ocean/src/ppr'
+Submodule 'components/mpas-seaice/src/icepack' (git@github.com:E3SM-Project/Icepack.git) registered for path 'components/mpas-seaice/src/icepack'
+Submodule 'components/ww3/src/source/WW3' (git@github.com:E3SM-Project/WW3.git) registered for path 'components/ww3/src/WW3'
+Submodule 'externals/YAKL' (git@github.com:mrnorman/YAKL.git) registered for path 'externals/YAKL'
+Submodule 'externals/cub' (git@github.com:NVlabs/cub.git) registered for path 'externals/cub'
+Submodule 'externals/ekat' (git@github.com:E3SM-Project/EKAT.git) registered for path 'externals/ekat'
+Submodule 'externals/haero' (git@github.com:eagles-project/haero.git) registered for path 'externals/haero'
+Submodule 'externals/mam4xx' (git@github.com:eagles-project/mam4xx.git) registered for path 'externals/mam4xx'
+Submodule 'externals/mct' (git@github.com:MCSclimate/MCT.git) registered for path 'externals/mct'
+Submodule 'externals/scorpio' (git@github.com:E3SM-Project/scorpio.git) registered for path 'externals/scorpio'
+Submodule 'externals/scorpio_classic' (git@github.com:E3SM-Project/scorpio.git) registered for path 'externals/scorpio_classic'
+Cloning into '/home/flue473/E3SMv2/code/20210806/cime'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/mpas-ocean/src/ppr'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/mpas-ocean/src/BGC'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/mpas-albany-landice/src/SeaLevelModel'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/mpas-ocean/src/FFTW'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/mpas-ocean/src/cvmix'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/YAKL'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/mct'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/ekat'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/mpp'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/mpas-ocean/src/MARBL'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/gcam/src'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/haero'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/mpas-ocean/src/gotm'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/mpas-seaice/src/icepack'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/mam4xx'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/mpas-ocean/src/SHTNS'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/eam/src/physics/cosp2/external'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/cub'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/eam/src/physics/rrtmgp/external'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/ww3/src/WW3'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/sbetr'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/fates'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/scorpio'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/scorpio_classic'...
+Submodule path 'cime': checked out 'd1acd48b77f9708c49d65f7246a101b08de08b6f'
+Submodule 'CIME/non_py/cprnc' (git@github.com:ESMCI/cprnc) registered for path 'cime/CIME/non_py/cprnc'
+Cloning into '/home/flue473/E3SMv2/code/20210806/cime/CIME/non_py/cprnc'...
+Warning: Permanently added the ECDSA host key for IP address '140.82.113.4' to the list of known hosts.
+Submodule path 'cime/CIME/non_py/cprnc': checked out '19bbb1ebb787103bb1047c2ac05516f6b1da3ac1'
+Submodule path 'components/eam/src/physics/cosp2/external': checked out '2deb41975faa4f5eacfc8b8f12b85acf6583d407'
+Submodule path 'components/eam/src/physics/rrtmgp/external': checked out 'a4f340db2d545385a57c19e9c4d3ec0c399dc7fb'
+Submodule path 'components/elm/src/external_models/fates': checked out '5bb36cba29b95295aca5aedc13f348ef1e001b99'
+Submodule 'tools/landusedata' (https://github.com/NGEET/tools-fates-landusedata) registered for path 'components/elm/src/external_models/fates/tools/landusedata'
+Submodule 'tools/xarray-functions' (https://github.com/NGEET/tools-fates-xarray.git) registered for path 'components/elm/src/external_models/fates/tools/xarray-functions'
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/fates/tools/landusedata'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/fates/tools/xarray-functions'...
+Submodule path 'components/elm/src/external_models/fates/tools/landusedata': checked out '5b357329214ac3b647daa3d471fb9fac9c116a54'
+Submodule path 'components/elm/src/external_models/fates/tools/xarray-functions': checked out 'b62d9333b5423e4759bd78b60e913dc1bbe214b7'
+Submodule path 'components/elm/src/external_models/mpp': checked out 'c0c903e675e31e6b9ab447b0cc51ccd8a36fa7a7'
+Submodule path 'components/elm/src/external_models/sbetr': checked out '3f4f35a1e2a7aa7e5aa3a6e847334290e85f60fb'
+Submodule '3rd-party/hdf5' (git@github.com:HDFGroup/hdf5.git) registered for path 'components/elm/src/external_models/sbetr/3rd-party/hdf5'
+Submodule '3rd-party/netcdf-c' (git@github.com:jinyun1tang/netcdf-c.git) registered for path 'components/elm/src/external_models/sbetr/3rd-party/netcdf-c'
+Submodule '3rd-party/netcdf-fortran' (git@github.com:jinyun1tang/netcdf-fortran.git) registered for path 'components/elm/src/external_models/sbetr/3rd-party/netcdf-fortran'
+Submodule '3rd-party/pfunit' (git@github.com:jinyun1tang/pFUnit.git) registered for path 'components/elm/src/external_models/sbetr/3rd-party/pfunit'
+Submodule '3rd-party/zlib' (git@github.com:madler/zlib.git) registered for path 'components/elm/src/external_models/sbetr/3rd-party/zlib'
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/sbetr/3rd-party/hdf5'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/sbetr/3rd-party/zlib'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/sbetr/3rd-party/netcdf-fortran'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/sbetr/3rd-party/pfunit'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/sbetr/3rd-party/netcdf-c'...
+Submodule path 'components/elm/src/external_models/sbetr/3rd-party/hdf5': checked out '3e847e003632bdd5fdc189ccbffe25ad2661e16f'
+Submodule path 'components/elm/src/external_models/sbetr/3rd-party/netcdf-c': checked out 'aa77907638344278852a9e4a2b4f9b96625a113a'
+Submodule path 'components/elm/src/external_models/sbetr/3rd-party/netcdf-fortran': checked out '808e5ac02cb029a985b8ba00a242b19877ea765a'
+Submodule path 'components/elm/src/external_models/sbetr/3rd-party/pfunit': checked out '6edf8df4fcfb099bbcaf413e471b0990f191eb5c'
+Submodule 'fArgParse' (https://github.com/Goddard-Fortran-Ecosystem/fArgParse.git) registered for path 'components/elm/src/external_models/sbetr/3rd-party/pfunit/extern/fArgParse'
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/sbetr/3rd-party/pfunit/extern/fArgParse'...
+Submodule path 'components/elm/src/external_models/sbetr/3rd-party/pfunit/extern/fArgParse': checked out 'fd52a2e229b415701372b8ced99eb8162af1c404'
+Submodule 'gFTL-shared' (https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared.git) registered for path 'components/elm/src/external_models/sbetr/3rd-party/pfunit/extern/fArgParse/extern/gFTL-shared'
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/sbetr/3rd-party/pfunit/extern/fArgParse/extern/gFTL-shared'...
+Submodule path 'components/elm/src/external_models/sbetr/3rd-party/pfunit/extern/fArgParse/extern/gFTL-shared': checked out '56ae388dba8fb3ead97d8b01a62c6e27ba4a8278'
+Submodule 'gFTL' (https://github.com/Goddard-Fortran-Ecosystem/gFTL.git) registered for path 'components/elm/src/external_models/sbetr/3rd-party/pfunit/extern/fArgParse/extern/gFTL-shared/extern/gFTL'
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/elm/src/external_models/sbetr/3rd-party/pfunit/extern/fArgParse/extern/gFTL-shared/extern/gFTL'...
+Submodule path 'components/elm/src/external_models/sbetr/3rd-party/pfunit/extern/fArgParse/extern/gFTL-shared/extern/gFTL': checked out '45b4d4a044f2a2796f07c6e69e01847d2b0d7228'
+Submodule path 'components/elm/src/external_models/sbetr/3rd-party/zlib': checked out 'cacf7f1d4e3d44d871b605da3b647f07d718623f'
+Submodule path 'components/gcam/src': checked out '0ffce23d17c01c0f4e598891243abd4bc37fe900'
+Submodule 'gcam' (git@github.com:JGCRI/gcam-core) registered for path 'components/gcam/src/iac/gcam'
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/gcam/src/iac/gcam'...
+Warning: Permanently added the ECDSA host key for IP address '140.82.112.4' to the list of known hosts.
+Submodule path 'components/gcam/src/iac/gcam': checked out '2901ad96aadf0a2ba272ef7718419dd8453af022'
+Submodule 'cpl/deps/eigen' (git@github.com:PX4/eigen) registered for path 'components/gcam/src/iac/gcam/cpl/deps/eigen'
+Submodule 'cvs/objects/climate/source/hector' (https://github.com/JGCRI/hector.git) registered for path 'components/gcam/src/iac/gcam/cvs/objects/climate/source/hector'
+Submodule 'output/modelinterface/modelinterface' (https://github.com/JGCRI/modelinterface.git) registered for path 'components/gcam/src/iac/gcam/output/modelinterface/modelinterface'
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/gcam/src/iac/gcam/cpl/deps/eigen'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/gcam/src/iac/gcam/output/modelinterface/modelinterface'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/components/gcam/src/iac/gcam/cvs/objects/climate/source/hector'...
+Submodule path 'components/gcam/src/iac/gcam/cpl/deps/eigen': checked out 'e7248b26a1ed53fa030c5c459f7ea095dfd276ac'
+Submodule path 'components/gcam/src/iac/gcam/cvs/objects/climate/source/hector': checked out 'ac4b909e521f5988b8cc81bf6f042e5bda94d209'
+Submodule path 'components/gcam/src/iac/gcam/output/modelinterface/modelinterface': checked out 'bda45d41ee6bbebad94164881ee95235a96f8ffc'
+Submodule path 'components/mpas-albany-landice/src/SeaLevelModel': checked out '5bb102d6750b1437f6a5305cdd244cbd3776c32b'
+Submodule path 'components/mpas-ocean/src/BGC': checked out '5588636f0e71a97c532391a5d9c252b1c6f3611a'
+Submodule path 'components/mpas-ocean/src/FFTW': checked out '5a12c1ab5f66a8d719482f80c72ccb9f6f5daca8'
+Submodule path 'components/mpas-ocean/src/MARBL': checked out '353beaf02e0e4310621d9976d2a5781b9596b3b1'
+Submodule path 'components/mpas-ocean/src/SHTNS': checked out 'e0a7d7f4218595ced11193e1d905f978bb153275'
+Submodule path 'components/mpas-ocean/src/cvmix': checked out '52aac958e05cdb2471dc73f9ef7fb4e816c550f2'
+Submodule path 'components/mpas-ocean/src/gotm': checked out 'cbdc189c27335be253bc0b9f2bde359a3586c9bf'
+Submodule path 'components/mpas-ocean/src/ppr': checked out '3c2246463d5de14f492139987bd84978b84e86ea'
+Submodule path 'components/mpas-seaice/src/icepack': checked out 'db64ce3a827331ffef9e4b39d4262e91575c7684'
+Submodule path 'components/ww3/src/WW3': checked out '62e77e77d764292f9d8ad8a7d90b3e81782a2aab'
+Submodule path 'externals/YAKL': checked out 'd9d33d8023772ee203f043c68857b565a0e8f50b'
+Submodule path 'externals/cub': checked out 'c3cceac115c072fb63df1836ff46d8c60d9eb304'
+Submodule path 'externals/ekat': checked out 'cb8a12ea23ae04cd048554902dec96d65527b75a'
+Submodule 'extern/Catch2' (git@github.com:E3SM-Project/Catch2) registered for path 'externals/ekat/extern/Catch2'
+Submodule 'extern/kokkos' (git@github.com:E3SM-Project/kokkos) registered for path 'externals/ekat/extern/kokkos'
+Submodule 'extern/spdlog' (git@github.com:e3sm-project/spdlog.git) registered for path 'externals/ekat/extern/spdlog'
+Submodule 'extern/yaml-cpp' (git@github.com:e3sm-project/yaml-cpp.git) registered for path 'externals/ekat/extern/yaml-cpp'
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/ekat/extern/Catch2'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/ekat/extern/yaml-cpp'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/ekat/extern/kokkos'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/ekat/extern/spdlog'...
+Submodule path 'externals/ekat/extern/Catch2': checked out '958944d27a2d2fb82aa008377bf4f8752f6b848e'
+Submodule path 'externals/ekat/extern/kokkos': checked out '6a19eb9454da490dbf785443d8f021028baeb161'
+Submodule path 'externals/ekat/extern/spdlog': checked out 'bdd1dff3788ebfe520f48f9ad216c60da6dd8f00'
+Submodule path 'externals/ekat/extern/yaml-cpp': checked out '95088a0a2b6f2dec0b3e6e59020cdcc0d4f3c658'
+Submodule path 'externals/haero': checked out '8f9b61aed4252461d76eb7c206927e4a005930f5'
+Submodule 'ext/ekat' (git@github.com:E3SM-Project/EKAT) registered for path 'externals/haero/ext/ekat'
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/haero/ext/ekat'...
+Submodule path 'externals/haero/ext/ekat': checked out '2fc0f632a66a198857e60b1a52a7e92af4478c4f'
+Submodule 'extern/Catch2' (git@github.com:E3SM-Project/Catch2) registered for path 'externals/haero/ext/ekat/extern/Catch2'
+Submodule 'extern/kokkos' (git@github.com:E3SM-Project/kokkos) registered for path 'externals/haero/ext/ekat/extern/kokkos'
+Submodule 'extern/spdlog' (git@github.com:e3sm-project/spdlog.git) registered for path 'externals/haero/ext/ekat/extern/spdlog'
+Submodule 'extern/yaml-cpp' (git@github.com:e3sm-project/yaml-cpp.git) registered for path 'externals/haero/ext/ekat/extern/yaml-cpp'
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/haero/ext/ekat/extern/Catch2'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/haero/ext/ekat/extern/yaml-cpp'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/haero/ext/ekat/extern/kokkos'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/haero/ext/ekat/extern/spdlog'...
+Submodule path 'externals/haero/ext/ekat/extern/Catch2': checked out '958944d27a2d2fb82aa008377bf4f8752f6b848e'
+Submodule path 'externals/haero/ext/ekat/extern/kokkos': checked out '6a19eb9454da490dbf785443d8f021028baeb161'
+Submodule path 'externals/haero/ext/ekat/extern/spdlog': checked out 'bdd1dff3788ebfe520f48f9ad216c60da6dd8f00'
+Submodule path 'externals/haero/ext/ekat/extern/yaml-cpp': checked out '95088a0a2b6f2dec0b3e6e59020cdcc0d4f3c658'
+Submodule path 'externals/mam4xx': checked out '6ceda4bf1aaa6aca2168e3379d36deba1904059d'
+Submodule 'ext/skywalker' (git@github.com:eagles-project/skywalker) registered for path 'externals/mam4xx/ext/skywalker'
+Submodule 'src/validation/mam_x_validation' (git@github.com:eagles-project/mam_x_validation.git) registered for path 'externals/mam4xx/src/validation/mam_x_validation'
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/mam4xx/ext/skywalker'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/mam4xx/src/validation/mam_x_validation'...
+Submodule path 'externals/mam4xx/ext/skywalker': checked out '29a438b715d35777797a81a5b1910e5a83a7fe31'
+Submodule 'ext/klib' (https://github.com/attractivechaos/klib.git) registered for path 'externals/mam4xx/ext/skywalker/ext/klib'
+Submodule 'ext/libyaml' (https://github.com/yaml/libyaml.git) registered for path 'externals/mam4xx/ext/skywalker/ext/libyaml'
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/mam4xx/ext/skywalker/ext/klib'...
+Cloning into '/home/flue473/E3SMv2/code/20210806/externals/mam4xx/ext/skywalker/ext/libyaml'...
+Submodule path 'externals/mam4xx/ext/skywalker/ext/klib': checked out '9a063b33efd841fcc42d4b9f68cb78bb528bf75b'
+Submodule path 'externals/mam4xx/ext/skywalker/ext/libyaml': checked out 'acd6f6f014c25e46363e718381e0b35205df2d83'
+Submodule path 'externals/mam4xx/src/validation/mam_x_validation': checked out 'a2617c5d3009b233bc6460406b074cc8a1bd2a19'
+Submodule path 'externals/mct': checked out '82b0071e69d14330b75d23b0bc68543ebea9aadc'
+Submodule path 'externals/scorpio': checked out '8b8450444c0e6f900042f57d93813065443bb5b5'
+Submodule path 'externals/scorpio_classic': checked out '09dab011e403763696b72e0a2f1bc4a6b3a94b00'
+
+----- Starting create_newcase -----
+
+Python 3.8 is recommended to run CIME. You have 3.7.
+Compset longname is 1850SOI_EAM%CMIP6_ELM%CNPRDCTCBCTOP_MPASSI_MPASO_MOSART_SGLC_SWAV
+Compset specification file is /home/flue473/E3SMv2/code/20210806/cime_config/allactive/config_compsets.xml
+Automatically adding SIAC to compset
+Automatically adding SESP to compset
+Compset forcing is
+ATM component is EAM with complete set of E3SM atmospheric mods for V3 (80 layers, P3, ZM  with convective microphysics, chemUCI, Linozv3, MAM5 and VBS SOA): CMIP6 forcings:
+LND component is ELM with :CN :C-N-P, nutrient competition via relative demand, ctc soil cascade with black carbon deposition :C-N-P, nutrient competition via relative demand, ctc soil cascade with black carbon deposition and subgrid solar radiation parameterization :
+ICE component is MPAS seaice:
+OCN component is mpas ocean default:
+ROF component is MOSART:
+GLC component is Stub glacier (land ice) component
+WAV component is Stub wave component
+IAC component is Stub iac component
+ESP component is Stub external system processing (ESP) component
+Pes     specification file is /home/flue473/E3SMv2/code/20210806/cime_config/allactive/config_pesall.xml
+ERROR: No machine cori-knl found
+
+Note: if create_newcase failed because sub-directory already exists:
+  * delete old case_script sub-directory
+  * or set do_newcase=false
